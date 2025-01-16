@@ -1,9 +1,6 @@
 ---
 layout: post
 title:  "Power Supply and a Pivot"
-date:   2015-04-25 22:03
-permalink: /:categories/:title
-categories: project pinball
 header-img: img/project/pinball/bg/powersupply.jpg
 ---
 

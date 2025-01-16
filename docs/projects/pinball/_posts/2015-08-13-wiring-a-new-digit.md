@@ -1,14 +1,26 @@
 ---
 layout: post
-title:  "Rearchitecting the output display, again."
-date:   2015-08-04 22:00
-permalink: /:categories/:title
-categories: project pinball
+title:  "Wiring a New Digit"
 header-img: img/project/pinball/bg/singledigit.jpg
 ---
 
-The Problem
-===========
+Wiring the Driver
+=================
+
+Initially I have to wire up my TLC59213IN to the 16 segment LED bank. In order to
+do a proof of concept I'm going to wire up a single digit.
+
+| Line | Display Pin | Display Segment | MAX Segment | MAX Signal | Max Pin |
+|:----:|:-----------:|:---------------:|:-----------:|:----------:|:-------:|
+|   1  |     11      | Common Cathode  |     CC      |      O1    |     8   |
+|   2  |      1      |        a        |     a1      |      O2    |     9   |
+|   3  |     18      |        b        |     a2      |      O3    |    10   |
+|   4  |     16      |        c        |      b      |      O4    |    11   |
+|   5  |     13      |        d        |      c      |      O5    |    12   |
+
+
+
+
 I want to create some simple circuit diagrams that look nice and can also be
 used to create a circuit board. Most layout programs either cost big bucks or
 run on the PC only (and still cost big bucks). I found a tool aimed primarily at

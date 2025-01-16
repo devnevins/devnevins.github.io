@@ -1,9 +1,6 @@
 ---
 layout: post
 title:  "Multiple Digit Display Bank"
-date:   2015-06-07 18:34
-permalink: /:categories/:title
-categories: project pinball
 header-img: img/project/pinball/bg/singledigit.jpg
 ---
 

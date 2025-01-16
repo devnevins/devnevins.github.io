@@ -1,9 +1,6 @@
 ---
 layout: post
 title:  "Single Multisegment Display"
-date:   2015-05-24 17:33
-permalink: /:categories/:title
-categories: project pinball
 header-img: img/project/pinball/bg/singledigit.jpg
 ---
 

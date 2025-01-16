@@ -1,9 +1,6 @@
 ---
 layout: post
 title:  "Five Volt Interlude"
-date:   2015-04-24 23:17
-permalink: /:categories/:title
-categories: project pinball
 ---
 
 A 5V Interlude

@@ -1,9 +1,6 @@
 ---
 layout: post
 title:  "Lighting an LED"
-date:   2015-02-08 11:49
-permalink: /:categories/:title
-categories: project pinball
 ---
 If you look at my [first light][1] post there is a glorious picture of a blank breadboard hooked up
 to a Raspberry Pi. I got it to flip a bit on the GPIO (#21) but I really wanted to see something.

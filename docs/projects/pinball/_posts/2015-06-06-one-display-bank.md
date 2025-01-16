@@ -1,9 +1,6 @@
 ---
 layout: post
 title:  "One Display Bank"
-date:   2015-06-06 15:33
-permalink: /:categories/:title
-categories: project pinball
 header-img: img/project/pinball/bg/singledigit.jpg
 ---
 

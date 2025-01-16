@@ -1,9 +1,6 @@
 ---
 layout: post
 title:  "Investigating the SPI driver"
-date:   2015-02-14 21:32
-permalink: /:categories/:title
-categories: project pinball
 ---
 
 We [left off][1] with the hardware being hooked up but no software to run our
