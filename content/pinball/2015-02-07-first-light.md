@@ -1,7 +1,6 @@
 ---
 title:  First Light
-date: 2015-02-24
-category: Pinball
+date: 2015-02-07
 ---
 I've always loved pinball machines and I really love electronics. So, the obvious tie-in would be to
  combine the two! I've decided to embark upon creating my own pinball machine from the ground up!

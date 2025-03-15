@@ -1,7 +1,6 @@
 ---
 title:  Introducing ESP32-S3
 date: 2025-03-04
-category: Clock
 ---
 
 Searching for a New Processor

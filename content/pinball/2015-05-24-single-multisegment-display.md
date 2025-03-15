@@ -1,7 +1,6 @@
 ---
 title:  Single Multisegment Display
 date: 2015-05-24
-category: Pinball
 ---
 
 Wiring up the MAX6954

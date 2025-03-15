@@ -1,7 +1,6 @@
 ---
 title:  Rearchitecting the output display, again.
 date: 2015-08-04
-category: Pinball
 ---
 
 The Problem

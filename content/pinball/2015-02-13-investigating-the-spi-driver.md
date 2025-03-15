@@ -1,7 +1,6 @@
 ---
 title:  Investigating the SPI driver
 date: 2015-02-13
-category: Pinball
 ---
 
 We [left off]({filename}2015-02-08-lighting-an-led.md) with the hardware being hooked up but no software to run our

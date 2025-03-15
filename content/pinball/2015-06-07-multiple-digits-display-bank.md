@@ -1,7 +1,6 @@
 ---
 title:  Multiple Digit Display Bank
 date: 2015-06-07
-category: Pinball
 ---
 
 Wiring Up Digit 1

@@ -1,7 +1,6 @@
 ---
 title:  Lighting an LED
 date: 2015-02-08
-category: Pinball
 ---
 If you look at my [first light]({filename}2015-02-07-first-light.md) post there is a glorious picture of a blank breadboard hooked up
 to a Raspberry Pi. I got it to flip a bit on the GPIO (#21) but I really wanted to see something.

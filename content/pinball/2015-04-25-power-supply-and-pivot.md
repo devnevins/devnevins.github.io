@@ -1,7 +1,6 @@
 ---
 title:  Power Supply and a Pivot
 date: 2015-04-25
-category: Pinball
 ---
 
 Finishing the Power Regulated Power Supply

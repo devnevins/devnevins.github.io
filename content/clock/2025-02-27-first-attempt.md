@@ -1,7 +1,6 @@
 ---
 title:  First Attempt
-date: 2025-02-24
-category: Clock
+date: 2025-02-27
 ---
 
 What Did I Do?

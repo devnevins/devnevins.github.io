@@ -1,7 +1,6 @@
 ---
 title: Five Volt Interlude
 date: 2015-04-24
-category: Pinball
 ---
 
 A 5V Interlude

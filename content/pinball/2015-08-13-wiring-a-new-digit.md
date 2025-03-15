@@ -1,7 +1,6 @@
 ---
 title:  Wiring a New Digit
 date: 2015-08-13
-category: Pinball
 ---
 
 Wiring the Driver

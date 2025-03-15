@@ -1,7 +1,6 @@
 ---
 title:  A New Hope, Part Deux
 date: 2025-01-14
-category: Blog
 ---
 After ignoring this blog for a while I decided I wanted to get back into it! Aiding this is the improved workflow of [GitHub Pages][githubpages] from nine (!) years ago. I've moved my blog from static hosting on AWS to static hosting on [GitHub][github]. It's got some limitations but since I'm already paying for GitHub this is a nice bonus.
 

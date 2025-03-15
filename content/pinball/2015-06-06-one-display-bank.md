@@ -1,7 +1,6 @@
 ---
 title:  One Display Bank
 date: 2015-06-06
-category: Pinball
 ---
 
 Wiring up a full Bank
