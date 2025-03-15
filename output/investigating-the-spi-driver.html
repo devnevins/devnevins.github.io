@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Investigating the SPI driver</title>
+    <link rel="stylesheet" href="/theme/css/main.css">
+</head>
+<body>
+  <header class="site-header" role="banner">
+
+    <div class="wrapper"><a class="site-title" rel="author" href="/">Dean Nevins</a><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewBox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+              </svg>
+            </span>
+          </label>
+  
+          <div class="trigger">
+            <a class="page-link" href="/pages/about.html">About</a>
+            <a class="page-link" href="/category/Blog.html">Blog</a>
+            <a class="page-link" href="/category/Clock.html">Clock</a>
+            <a class="page-link" href="/category/Pinball.html">Pinball</a>
+          </div>
+        </nav>
+      </div>
+  </header>
+    <main class="page-content" aria-label="Content">
+<div class="wrapper">
+    <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+            <h1 class="post-title p-name" itemprop="name headline">Investigating the SPI driver</h1>
+            <div class="opposite-sides post-meta">
+                    <time class="opposite-sides left" datetime="2015-02-13 00:00:00-08:00" itemprop="datePublished">February 2, 2015
+                    </time> 
+                    <div class="opposite-sides right">Category: Pinball</div>
+            </div>
+        </header>
+
+        <!-- Article stream navigation top -->
+        <div class="article-stream">
+
+            <div class="article-steam left">
+                <a href="/lighting-an-led.html">
+                    << Lighting an LED
+                </a>
+            </div>
+            
+            <div class="article-steam right">
+                <a href="/driving-the-max6957.html">
+                    Driving the MAX6957 >>
+                </a>
+            </div>
+            
+        </div>
+
+        <!-- Article content -->
+        <div class="post-content e-content" itemprop="articleBody">
+            <p>We <a href="/lighting-an-led.html">left off</a> with the hardware being hooked up but no software to run our
+project. I wanted to test the SPI hardware and the best way to do so is with a
+<a href="https://en.wikipedia.org/wiki/Loopback">loopback</a> test. After using my favorite search engine I found a post called
+<a href="http://louisthiery.com/?p=248&amp;preview=true">SPI-Python: Hardware SPI for RasPi from Python</a> by Louis Thiery. He had an
+interesting article on how to interface an Arduino with a RasPi. I wasn't
+interested in that (right now) but I was curious about the spidev_test program
+that he used to verify his setup. However, the instructions didn't work for me
+due URLs I couldn't get to and a test program that wouldn't compile because of
+differences in the header files.</p>
+<h1>Modifying the Code</h1>
+<p>On my Raspberry Pi I created a directory in which to load the source file and
+then I got the original source from the Linux source tree.</p>
+<div class="highlight"><pre><span></span><code>mkdir spidev_test
+wget https://raw.githubusercontent.com/torvalds/linux/master/Documentation/spi/spidev_test.c
+</code></pre></div>
+
+<p>I now had the tester source file in my directory. It's a simple matter to
+compile it.</p>
+<div class="highlight"><pre><span></span><code>gcc spidev_test.c -o spidev_test
+</code></pre></div>
+
+<p>Uh oh, I get a few error messages:</p>
+<div class="highlight"><pre><span></span><code>spidev_test.c: In function ‘transfer’:
+spidev_test.c:60:13: error: ‘SPI_TX_QUAD’ undeclared (first use in this function)
+spidev_test.c:60:13: note: each undeclared identifier is reported only once for each function it appears in
+spidev_test.c:61:5: error: ‘struct spi_ioc_transfer’ has no member named ‘tx_nbits’
+spidev_test.c:62:18: error: ‘SPI_TX_DUAL’ undeclared (first use in this function)
+spidev_test.c:63:5: error: ‘struct spi_ioc_transfer’ has no member named ‘tx_nbits’
+spidev_test.c:64:13: error: ‘SPI_RX_QUAD’ undeclared (first use in this function)
+spidev_test.c:65:5: error: ‘struct spi_ioc_transfer’ has no member named ‘rx_nbits’
+spidev_test.c:66:18: error: ‘SPI_RX_DUAL’ undeclared (first use in this function)
+spidev_test.c:67:5: error: ‘struct spi_ioc_transfer’ has no member named ‘rx_nbits’
+spidev_test.c: In function ‘parse_opts’:
+spidev_test.c:172:12: error: ‘SPI_TX_DUAL’ undeclared (first use in this function)
+spidev_test.c:175:12: error: ‘SPI_TX_QUAD’ undeclared (first use in this function)
+spidev_test.c:184:12: error: ‘SPI_RX_DUAL’ undeclared (first use in this function)
+spidev_test.c:186:12: error: ‘SPI_RX_QUAD’ undeclared (first use in this function)
+spidev_test.c: In function ‘main’:
+spidev_test.c:204:18: error: ‘SPI_IOC_WR_MODE32’ undeclared (first use in this function)
+spidev_test.c:208:18: error: ‘SPI_IOC_RD_MODE32’ undeclared (first use in this function)
+</code></pre></div>
+
+<p>After some investigation the culprit turns out to be my spidev.h header file.
+The constants mentioned above don't exist in that file. I am using <strong>Linux
+raspberrypi 3.18.7+</strong> and as of that distribution those constants are not there.
+When I check the file on github the commit log says that the new revision
+implements a couple of new modes for <a href="https://en.wikipedia.org/wiki/Direct_memory_access">DMA</a> controlled SPI. Ah, well I don't
+care about that so I'll just comment out references to those constants.</p>
+<p>As an aside, unless you are doing <strong>a lot</strong> of SPI reads (or writes) you
+probably don't need a DMA interface.</p>
+<p>The last thing is the change the name of the device file from <code>/dev/spidev1.1</code> to
+<code>/dev/spidev0.0</code></p>
+<p>Once the references were commented out and the device file updaed it compiled
+fine. Now, on to the test.</p>
+<h1>Testing the Loopback</h1>
+<p>The first thing I need to do is to connect the loopback. This is very simple
+since I'm using a breadboard and the <a href="http://www.adafruit.com/products/2028">Adafruit T-Cobbler Plus</a>. I just put a
+jumper from the MOSI (Master Out Slave In) to MISO (Master In Slave Out). Now
+we're ready to run the code!</p>
+<p>To run the code I used the sudo utility since accessing hardware directly is not
+normally allowed in Linux. I ran the code and observed the output.</p>
+<div class="highlight"><pre><span></span><code><span class="nf">pi</span><span class="nv">@raspberrypi</span><span class="err">:</span><span class="o">~/</span><span class="n">spidev_test</span><span class="err">$</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="p">.</span><span class="o">/</span><span class="n">spidev_test</span>
+</code></pre></div>
+
+<p>This is what I saw. It works!</p>
+<div class="highlight"><pre><span></span><code>spi mode: 0x0
+bits per word: 8
+max speed: 500000 Hz (500 KHz)
+
+FF FF FF FF FF FF
+40 00 00 00 00 95
+FF FF FF FF FF FF
+FF FF FF FF FF FF
+FF FF FF FF FF FF
+DE AD BE EF BA AD
+F0 0D
+</code></pre></div>
+
+<h1>A Complication</h1>
+<p>When I was working with the SPI interface I was pushing on it really hard and
+after awhile it didn't show up when I rebooted. I first noticed this after I had
+done an update to my system using the apt-get two-step.</p>
+<div class="highlight"><pre><span></span><code>sudo apt-get update
+sudo apt-get upgrade
+</code></pre></div>
+
+<p>The best way to fix it is to use raspi-config to always enable the SPI
+interface. I'm going to be a heavy user of SPI so I don't see why I wouldn't
+want to do this. The SPI interface controls are located under the "8 Advanced
+Options" entry. Once chosen select "A6 SPI". It will then ask you if you want to
+enable the SPI interface and if you want to load the kernel module. Yes to both
+questions. Save it and after a reboot you should see the driver when you issue
+an <strong>lsmod</strong></p>
+<div class="highlight"><pre><span></span><code><span class="n">pi@raspberrypi</span><span class="p">:</span><span class="err">~$</span><span class="w"> </span><span class="n">lsmod</span>
+<span class="k">Module</span><span class="w">                  </span><span class="nn">Size</span><span class="w">  </span><span class="n">Used</span><span class="w"> </span><span class="n">by</span>
+<span class="n">snd_bcm2835</span><span class="w">            </span><span class="mi">21342</span><span class="w">  </span><span class="mi">0</span>
+<span class="n">snd_pcm</span><span class="w">                </span><span class="mi">93100</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="n">snd_bcm2835</span>
+<span class="n">snd_seq</span><span class="w">                </span><span class="mi">61097</span><span class="w">  </span><span class="mi">0</span>
+<span class="n">snd_seq_device</span><span class="w">          </span><span class="mi">7209</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="n">snd_seq</span>
+<span class="n">snd_timer</span><span class="w">              </span><span class="mi">23007</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="n">snd_pcm</span><span class="p">,</span><span class="n">snd_seq</span>
+<span class="n">snd</span><span class="w">                    </span><span class="mi">67211</span><span class="w">  </span><span class="mi">5</span><span class="w"> </span><span class="n">snd_bcm2835</span><span class="p">,</span><span class="n">snd_timer</span><span class="p">,</span><span class="n">snd_pcm</span><span class="p">,</span><span class="n">snd_seq</span><span class="p">,</span><span class="n">snd_seq_device</span>
+<span class="n">spi_bcm2708</span><span class="w">             </span><span class="mi">6018</span><span class="w">  </span><span class="mi">0</span>
+<span class="n">uio_pdrv_genirq</span><span class="w">         </span><span class="mi">3666</span><span class="w">  </span><span class="mi">0</span>
+<span class="n">uio</span><span class="w">                     </span><span class="mi">9897</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="n">uio_pdrv_genirq</span>
+</code></pre></div>
+
+<p>Now I have the SPI available whenever I start up my Pi.</p>
+<h1>What's Next</h1>
+<p>Now that I've got the software test working I want to write some code to send
+information to my [4-Wire-Intefaced 20-Port LED Display Driver and I/O Expander
+(MAX6957)(http://datasheets.maximintegrated.com/en/ds/MAX6957.pdf) and light an LED.</p>
+        </div>
+
+        <a class="u-url" href="/projects/clock/2025/03/04/introducing-esp32-s3.html" hidden></a>
+
+        <!-- Article stream navigation bottom -->
+        <!-- Article stream navigation top -->
+        <div class="article-stream">
+
+            <div class="article-steam left">
+                <a href="/lighting-an-led.html">
+                    << Lighting an LED
+                </a>
+            </div>
+            
+            <div class="article-steam right">
+                <a href="/driving-the-max6957.html">
+                    Driving the MAX6957 >>
+                </a>
+            </div>
+
+    </article>
+
+</div>
+    </main>
+    <footer class="site-footer h-card">
+        <data class="u-url" href="/"></data>
+
+        <div class="wrapper">
+            <div class="footer-col-wrapper">
+                <div class="footer-col footer-col-1">
+                    <ul class="contact-list">
+                        <li class="p-name">Dean Nevins</li>
+                    </ul>
+                </div>
+
+                <div class="footer-col footer-col-2">
+                    <ul class="social-media-list">
+                        <li>
+                            <a href="https://github.com/devnevins">
+<svg width="18px" height="18px" style="fill: #828282;" viewBox="0 0 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dribbble-Light-Preview" transform="translate(-140.000000, -7559.000000)" fill="#000000">
+            <g id="icons" transform="translate(56.000000, 160.000000)">
+                <path d="M94,7399 C99.523,7399 104,7403.59 104,7409.253 C104,7413.782 101.138,7417.624 97.167,7418.981 C96.66,7419.082 96.48,7418.762 96.48,7418.489 C96.48,7418.151 96.492,7417.047 96.492,7415.675 C96.492,7414.719 96.172,7414.095 95.813,7413.777 C98.04,7413.523 100.38,7412.656 100.38,7408.718 C100.38,7407.598 99.992,7406.684 99.35,7405.966 C99.454,7405.707 99.797,7404.664 99.252,7403.252 C99.252,7403.252 98.414,7402.977 96.505,7404.303 C95.706,7404.076 94.85,7403.962 94,7403.958 C93.15,7403.962 92.295,7404.076 91.497,7404.303 C89.586,7402.977 88.746,7403.252 88.746,7403.252 C88.203,7404.664 88.546,7405.707 88.649,7405.966 C88.01,7406.684 87.619,7407.598 87.619,7408.718 C87.619,7412.646 89.954,7413.526 92.175,7413.785 C91.889,7414.041 91.63,7414.493 91.54,7415.156 C90.97,7415.418 89.522,7415.871 88.63,7414.304 C88.63,7414.304 88.101,7413.319 87.097,7413.247 C87.097,7413.247 86.122,7413.234 87.029,7413.87 C87.029,7413.87 87.684,7414.185 88.139,7415.37 C88.139,7415.37 88.726,7417.2 91.508,7416.58 C91.513,7417.437 91.522,7418.245 91.522,7418.489 C91.522,7418.76 91.338,7419.077 90.839,7418.982 C86.865,7417.627 84,7413.783 84,7409.253 C84,7403.59 88.478,7399 94,7399" id="github-[#142]"></path>
+            </g>
+        </g>
+    </g>
+</svg>                                <span class="username">devnevins</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-col footer-col-3">
+                    <p>My space on the internet. Not myspace; you know what I mean. Projects, opinions, and such.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+        <article class="post">
+            {% for article in articles_page.object_list %}
+                <h1><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h1>
+                <p class="author">
+                    <span class="date">{{ article.date.strftime("%B %-m, %Y") }}</span>
+                </p>
+                <div class="content">
+                    {% if articles_page.number == 1 and loop.first %}
+                        {{ article.content }}
+                    {% else %}
+                        {{ article.summary }} 
+                        <div class="more-position"><a href="{{ SITEURL }}/{{ article.url }}">(more...)</a></div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <!-- Pagination Code -->
+            {% if articles_page.has_other_pages() %}
+                {% include 'pagination.html' %}
+            {% endif %}
+        </article>
+    </div>
+</main>
+
+{% endblock %}
