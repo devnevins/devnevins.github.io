@@ -1,3 +1,4 @@
+"""Settings for website configuration. Used during development and publishing."""
 AUTHOR = 'Dean Nevins'
 SITENAME = 'devnevins'
 SITEURL = ""

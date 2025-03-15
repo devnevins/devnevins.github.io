@@ -1,5 +1,5 @@
 ---
-title: About
+title: about
 date: 2025-03-13
 ---
 Why Did I Make This?
