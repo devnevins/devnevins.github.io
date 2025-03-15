@@ -13,4 +13,4 @@ jobs:
     with:
       settings: "publishconf.py"
       requirements: "pelican[markdown] typogrify pelican-neighbors"
-      theme: "/theme"
+      theme: "theme"
