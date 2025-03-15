@@ -99,5 +99,5 @@ supply I can wire up the rest of the digits and test them.
 [1]: http://www.maximintegrated.com/en/products/power/display-power-control/MAX6954.html
 [2]: http://www.adafruit.com/product/184
 [3]: {attach}images/one_display_bank_01.jpg
-[4]: {filename}/power-supply-and-pivot.md
-[5]: {filename}images/one_display_bank_02.jpg
+[4]: {filename}2015-04-25-power-supply-and-pivot.md
+[5]: {static}images/one_display_bank_02.jpg
