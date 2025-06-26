@@ -10,7 +10,7 @@ might find it interesting.
 What Tools Do I Use?
 ====================
 Since this is a website consisting of [static pages][1] I used [Jekyll][2] since that was a part of 
-[GitHub Pages][3]. However, I wanted to possibly write some plug-ins or extenstions and I'm not
+[GitHub Pages][3]. However, I wanted to possibly write some plug-ins or extensions and I'm not
 really a fan of Ruby
 but I am a fan of Python. I transitioned the website to [Pelican]() and I'm also using the
 following plug-ins:
