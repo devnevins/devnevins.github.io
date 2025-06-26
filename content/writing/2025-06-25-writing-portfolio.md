@@ -7,7 +7,7 @@ show that I can work with different artists with different looks.
 ## Eye of the Beholder ##
 
 This is the story of a civilization that became overcrowded and had to escape its confines. However,
-the confines turn out to be someone's eyeball and the 'civilization' was parasitic worms. This comic
+the confines are not what you'd expect. This comic
 was published as part of the anthology BeBop #1: Unexpectations by Bird's Eye Press. Art by Raymond Griffith.
 
 Click on an image to embiggen.
